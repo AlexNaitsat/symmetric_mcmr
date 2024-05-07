@@ -1,0 +1,314 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "setup_softras.py",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":    ["build",
+                        "develop"
+                       ]
+        },
+        {
+            "name": "Test airplane",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args":    [
+                        "--dataset_name", "pascal",
+                        "--dataset_dir", "~/research/datasets/Pascal3D",
+                        "--classes", "aeroplane",
+                        "--sub_classes",                                 // activate intra-class variation
+                        "--cmr_mode",                                    // use of GT+MaskRCNN masks instead of GT+PointRend
+                        "--subdivide", "4",                                // starting mesh subdivision level
+                        "--sdf_subdivide_steps", "351",                    // mesh subdivision epoch steps
+                        "--use_learned_class",
+                        "--num_learned_shapes", "8", //set number of meanshapes 
+                        // "--num_learned_meanshapes", "<num-of-meanshapes>", //wrong argument name 
+                        "--checkpoint_dir", "checkpoint",
+                        "--log_dir", "log",
+                        "--pretrained_weights", "weights/plane_8_MRCNN.pth",         // load pre-trained weights for testing
+                        "--cam_loss_wt", "20.0",
+                        "--cam_reg_wt", "0.1", 
+                        "--mask_loss_wt", "100.0", 
+                        "--deform_reg_wt", "0.05", 
+                        "--laplacian_wt", "6.0",              
+                        "--laplacian_delta_wt", "1.8",
+                        "--graph_laplacian_wt", "0.0", 
+                        "--tex_percept_loss_wt", "0.8",
+                        "--tex_color_loss_wt", "0.03", 
+                        "--tex_pixel_loss_wt", "0.005", 
+                        "--save_dir", "save/plane_small_draft_symm",        // directory to save qualitative results
+                        "--save_results",                      // activate qualitative results saving
+                        "--qualitative_results",                // activate qualitative results with weighted meanshape saving 
+                        //"--symmetrize", "1",
+                        "--symmetrize", "1", "2", //different symmetrization of top/bottom slices  
+                        "--data_index_name", "tiny"  //to run on a data subset  using car_small_*.txt index file 
+                        // --faster                           // disable deterministic mode
+                       ]
+        },
+        {
+            "name": "Test car 10",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args":    [
+                        "--dataset_name", "pascal",
+                        "--dataset_dir", "~/research/datasets/Pascal3D",
+                        "--classes", "car",
+                        "--sub_classes",                                 // activate intra-class variation
+                        "--cmr_mode",                                    // use of GT+MaskRCNN masks instead of GT+PointRend
+                        "--subdivide", "4",                                // starting mesh subdivision level
+                        "--sdf_subdivide_steps", "351",                    // mesh subdivision epoch steps
+                        "--use_learned_class",
+                        "--num_learned_shapes", "10", //set number of meanshapes 
+                        // "--num_learned_meanshapes", "<num-of-meanshapes>", //wrong argument name 
+                        "--checkpoint_dir", "checkpoint",
+                        "--log_dir", "log/car_10_MRCNN_tiny_draft",
+                        "--pretrained_weights", "weights/car_10_MRCNN.pth",         // load pre-trained weights for testing
+                        "--cam_loss_wt", "20.0",
+                        "--cam_reg_wt", "0.1", 
+                        "--mask_loss_wt", "100.0", 
+                        "--deform_reg_wt", "0.05", 
+                        "--laplacian_wt", "6.0",              
+                        "--laplacian_delta_wt", "1.8",
+                        "--graph_laplacian_wt", "0.0", 
+                        "--tex_percept_loss_wt", "0.8",
+                        "--tex_color_loss_wt", "0.03", 
+                        "--tex_pixel_loss_wt", "0.005", 
+                        "--save_dir", "save/car_10_MRCNN_tiny_draft",        // directory to save qualitative results
+                        "--save_results",             // activate qualitative results saving
+                        "--qualitative_results",      // activate qualitative results with weighted meanshape saving 
+                        // --faster                   // disable deterministic mode
+                        "--symmetrize", "0",
+                        "--data_index_name", "tiny"  //to run on a data subset  using car_small_*.txt index file 
+                    ]
+        },
+        {
+            "name": "Test plane-car 1",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args":    [
+                "--dataset_name", "pascal",
+                "--dataset_dir", "~/research/datasets/Pascal3D",
+                "--classes", "aeroplane","car",
+                //"--sub_classes",                                 // activate intra-class variation
+                "--cmr_mode",                                    // use of GT+MaskRCNN masks instead of GT+PointRend
+                "--subdivide", "4",                                // starting mesh subdivision level
+                "--sdf_subdivide_steps", "351",                    // mesh subdivision epoch steps
+                "--use_learned_class",
+                "--num_learned_shapes", "1", //set number of meanshapes 
+                //"--single_mean_shape",     // otherwise fails 
+                // "--num_learned_meanshapes", "<num-of-meanshapes>", //wrong argument name 
+                "--checkpoint_dir", "checkpoint/plane_car_1_PointRend",
+                "--log_dir", "log/plane_car_1_PointRend",
+                "--pretrained_weights", "weights/plane_car_1_PointRend.pth",         // load pre-trained weights for testing
+                "--cam_loss_wt", "20.0",
+                "--cam_reg_wt", "0.1", 
+                "--mask_loss_wt", "100.0", 
+                "--deform_reg_wt", "0.05", 
+                "--laplacian_wt", "6.0",              
+                "--laplacian_delta_wt", "1.8",
+                "--graph_laplacian_wt", "0.0", 
+                "--tex_percept_loss_wt", "0.8",
+                "--tex_color_loss_wt", "0.03", 
+                "--tex_pixel_loss_wt", "0.005", 
+                "--save_dir", "save/plane_car_1_PointRend",        // directory to save qualitative results
+                "--save_results",             // activate qualitative results saving
+                "--qualitative_results",      // activate qualitative results with weighted meanshape saving 
+                // --faster                   // disable deterministic mode
+                "--data_index_name", "tiny"  //to run on a data subset  using car_small_*.txt index file 
+            ]
+        },
+        {
+            "name": "Test plane-car 2",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args":    [
+                "--dataset_name", "pascal",
+                "--dataset_dir", "~/research/datasets/Pascal3D",
+                "--classes", "aeroplane","car",
+                //"--sub_classes",                                 // activate intra-class variation
+                "--cmr_mode",                                    // use of GT+MaskRCNN masks instead of GT+PointRend
+                "--subdivide", "4",                                // starting mesh subdivision level
+                "--sdf_subdivide_steps", "351",                    // mesh subdivision epoch steps
+                "--use_learned_class",
+                "--num_learned_shapes", "2", //set number of meanshapes 
+                // "--num_learned_meanshapes", "<num-of-meanshapes>", //wrong argument name 
+                "--checkpoint_dir", "checkpoint",
+                "--log_dir", "log",
+                "--pretrained_weights", "weights/plane_car_2_PointRend.pth",         // load pre-trained weights for testing
+                "--cam_loss_wt", "20.0",
+                "--cam_reg_wt", "0.1", 
+                "--mask_loss_wt", "100.0", 
+                "--deform_reg_wt", "0.05", 
+                "--laplacian_wt", "6.0",              
+                "--laplacian_delta_wt", "1.8",
+                "--graph_laplacian_wt", "0.0", 
+                "--tex_percept_loss_wt", "0.8",
+                "--tex_color_loss_wt", "0.03", 
+                "--tex_pixel_loss_wt", "0.005", 
+                "--save_dir", "save/plane_car_2_PointRend_new",        // directory to save qualitative results
+                "--save_results",             // activate qualitative results saving
+                "--qualitative_results",      // activate qualitative results with weighted meanshape saving 
+                // --faster                   // disable deterministic mode
+                "--data_index_name", "small"  //to run on a data subset  using car_small_*.txt index file 
+            ]
+        },
+        {
+            "name": "Test bicycle-bus-car-bike-1-PR",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args":    [
+                "--dataset_name", "pascal",
+                "--dataset_dir", "~/research/datasets/Pascal3D",
+                "--classes", "bicycle","bus","car", "motorbike",
+                //"--sub_classes",                                 // activate intra-class variation
+                "--cmr_mode",                                    // use of GT+MaskRCNN masks instead of GT+PointRend
+                "--subdivide", "4",                                // starting mesh subdivision level
+                "--sdf_subdivide_steps", "351",                    // mesh subdivision epoch steps
+                "--use_learned_class",
+                "--num_learned_shapes", "1", //set number of meanshapes 
+                "--single_mean_shape",     // otherwise fails 
+                // "--num_learned_meanshapes", "<num-of-meanshapes>", //wrong argument name 
+                "--checkpoint_dir", "checkpoint",
+                "--log_dir", "log",
+                "--pretrained_weights", "weights/bicycle_bus_car_bike_1_PointRend.pth",         // load pre-trained weights for testing
+                "--cam_loss_wt", "20.0",
+                "--cam_reg_wt", "0.1", 
+                "--mask_loss_wt", "100.0", 
+                "--deform_reg_wt", "0.05", 
+                "--laplacian_wt", "6.0",              
+                "--laplacian_delta_wt", "1.8",
+                "--graph_laplacian_wt", "0.0", 
+                "--tex_percept_loss_wt", "0.8",
+                "--tex_color_loss_wt", "0.03", 
+                "--tex_pixel_loss_wt", "0.005", 
+                "--save_dir", "save",        // directory to save qualitative results
+                "--save_results",             // activate qualitative results saving
+                //"--qualitative_results",      // activate qualitative results with weighted meanshape saving 
+                // --faster                   // disable deterministic mode
+                "--data_index_name", "small"  //to run on a data subset  using car_small_*.txt index file 
+            ]
+        },
+        {
+            "name": "Test bicycle-bus-car-bike-4-PR",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args":    [
+                "--dataset_name", "pascal",
+                "--dataset_dir", "~/research/datasets/Pascal3D",
+                "--classes", "bicycle","bus","car", "motorbike",
+                //"--sub_classes",                                 // activate intra-class variation
+                "--cmr_mode",                                    // use of GT+MaskRCNN masks instead of GT+PointRend
+                "--subdivide", "4",                                // starting mesh subdivision level
+                "--sdf_subdivide_steps", "351",                    // mesh subdivision epoch steps
+                "--use_learned_class",
+                "--num_learned_shapes", "4", //set number of meanshapes 
+                // "--num_learned_meanshapes", "<num-of-meanshapes>", //wrong argument name 
+                "--checkpoint_dir", "checkpoint",
+                "--log_dir", "log",
+                "--pretrained_weights", "weights/bicycle_bus_car_bike_4_PointRend.pth",         // load pre-trained weights for testing
+                "--cam_loss_wt", "20.0",
+                "--cam_reg_wt", "0.1", 
+                "--mask_loss_wt", "100.0", 
+                "--deform_reg_wt", "0.05", 
+                "--laplacian_wt", "6.0",              
+                "--laplacian_delta_wt", "1.8",
+                "--graph_laplacian_wt", "0.0", 
+                "--tex_percept_loss_wt", "0.8",
+                "--tex_color_loss_wt", "0.03", 
+                "--tex_pixel_loss_wt", "0.005", 
+                "--save_dir", "save/bicycle_bus_car_bike_4_PR_new",        // directory to save qualitative results
+                "--save_results",             // activate qualitative results saving
+                "--qualitative_results",      // activate qualitative results with weighted meanshape saving 
+                // --faster                   // disable deterministic mode
+                "--data_index_name", "small"  //to run on a data subset  using car_small_*.txt index file 
+            ]
+        },
+        {
+            "name": "Train cars 10",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args":    [
+                        "--dataset_name", "pascal",
+                        "--dataset_dir", "~/research/datasets/Pascal3D",
+                        "--classes", "car",
+                        "--sub_classes",                                 // activate intra-class variation
+                        "--cmr_mode",                                    // use of GT+MaskRCNN masks instead of GT+PointRend
+                        "--subdivide", "4",                                // starting mesh subdivision level
+                        "--sdf_subdivide_steps", "351",                    // mesh subdivision epoch steps
+                        "--use_learned_class",
+                        "--num_learned_shapes", "10", //set number of meanshapes 
+                        // "--num_learned_meanshapes", "<num-of-meanshapes>", //wrong argument name 
+                        "--checkpoint_dir", "checkpoint",
+                        "--log_dir", "log",
+                        "--pretrained_weights", "weights/car_10_MRCNN.pth",         // load pre-trained weights for testing
+                        //"--pretrained_weights", "checkpoint/car_10_MRCNN_530ep.pth",         // load pre-trained weights for testing
+                        "--cam_loss_wt", "20.0",
+                        "--cam_reg_wt", "0.1", 
+                        "--mask_loss_wt", "100.0", 
+                        "--deform_reg_wt", "0.05", 
+                        "--laplacian_wt", "6.0",              
+                        "--laplacian_delta_wt", "1.8",
+                        "--graph_laplacian_wt", "0.0", 
+                        "--tex_percept_loss_wt", "0.8",
+                        "--tex_color_loss_wt", "0.03", 
+                        "--tex_pixel_loss_wt", "0.005", 
+                        "--is_training",              // activate training mode
+                        "--num_epochs", "600",         // number of epoch w.r.t. loaded weights ("car_10_MRCNN.pth" was trianed in 500 epochs)
+                        "--display_freq", "50", //to ensure output of visual results at last iteratio
+                            //"--save_dir", "save",        // directory to save qualitative results
+                            //"--save_results",                      // activate qualitative results saving
+                            //"--qualitative_results"                // activate qualitative results with weighted meanshape saving 
+                        "--symmetrize",
+                        // (--faster)                           // disable deterministic mode
+                        "--data_index_name", "small"  //to run on a data ubset  using car_small_*.txt index file    
+                    ]
+        },
+        //CUDA_VISIBLE_DEVICES=0 python eval.py --list1_path ./list/baseline_output.txt --list1_max_value 255 --list2_path ./list/gt.txt --calc_cd --calc_emd --calc_iou --threshold 0.1 --output_path results.csv
+        {
+        "name": "Eval 3d metrics",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/../pix3d/eval/eval.py",
+        "console": "integratedTerminal",
+        "args":    [
+                    //"--list1_path", "./list/baseline_output.txt",
+                    "--list1_path", "./list/baseline_output_tiny.txt",
+                    "--list1_max_value", "255",
+                    //"--list2_path", "./list/gt.txt",
+                    "--list2_path", "./list/gt_tiny.txt",
+                    //"--calc_cd",
+                    //"--calc_emd",
+                    "--calc_iou", 
+                    "--threshold", "0.1",
+                    "--output_path", "results.csv"
+                ]
+    }
+    ]
+}
